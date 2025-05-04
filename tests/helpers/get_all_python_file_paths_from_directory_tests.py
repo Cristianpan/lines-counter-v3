@@ -1,4 +1,5 @@
 from unittest import TestCase
+from pathlib import Path
 
 from src.helpers.get_all_python_file_paths_from_directory import (
     get_all_python_file_paths_from_directory,
@@ -24,5 +25,20 @@ class GetAllPythonFilePathsFromDirectoryTests(TestCase):
         python_files = get_all_python_file_paths_from_directory(
             "tests/assets/only_code_python_project"
         )
+        python_files = [Path(p) for p in python_files]
 
-        self.assertIn("tests/assets/only_code_python_project/main.py", python_files)
+        self.assertIn(
+            Path("tests/assets/only_code_python_project/main.py"), python_files
+        )
+
+    def test_filter_python_file(self):
+        callable = lambda name: "main" not in name
+        python_files = get_all_python_file_paths_from_directory(
+            "tests/assets/only_code_python_project", callable
+        )
+
+        python_files = [Path(p) for p in python_files]
+
+        self.assertNotIn(
+            Path("tests/assets/only_code_python_project/main.py"), python_files
+        )
