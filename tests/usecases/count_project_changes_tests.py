@@ -1,5 +1,5 @@
 from src.usecases.count_project_changes import count_project_changes
-from src.types.changes_count import ChangesCount
+from src.types.file_changes import FileChanges
 from unittest import TestCase
 
 
@@ -17,26 +17,26 @@ class CountProjectChangesTests(TestCase):
         self.deleted_files = deleted_files
         self.common_files = common_files
 
-    def test_that_counts_changes_correctly_from_file_with_changes(self):
-        common_file = self.common_files[0]
+    def test_counts_changes_correctly_in_modified_file(self):
+        common_file = self.get_file_by_path("\\common_file.py", self.common_files)
         changes_counter = common_file.counter
 
-        self.assertEqual(common_file.relative_path, "\common_file.py")
         self.assertEqual(changes_counter.added, 2)
         self.assertEqual(changes_counter.deleted, 2)
         self.assertEqual(changes_counter.modified, 2)
 
-    def test_that_counts_changes_correctly_from_deleted_file(self):
-        deleted_file = self.deleted_files[0]
+
+    def test_counts_changes_correctly_in_deleted_file(self):
+        deleted_file = self.get_file_by_path("\\deleted_file.py", self.deleted_files)
         changes_counter = deleted_file.counter
 
-        self.assertEqual(deleted_file.relative_path, "\deleted_file.py")
         self.assertEqual(changes_counter.added, 0)
         self.assertEqual(changes_counter.deleted, 3)
         self.assertEqual(changes_counter.modified, 0)
 
-    def test_that_counts_changes_correctly_from_new_file(self):
-        new_file = self.new_files[0]
+
+    def test_counts_changes_correctly_in_new_file(self):
+        new_file = self.get_file_by_path("\\new_file.py", self.new_files)
         changes_counter = new_file.counter
 
         self.assertEqual(new_file.relative_path, "\\new_file.py")
@@ -44,10 +44,15 @@ class CountProjectChangesTests(TestCase):
         self.assertEqual(changes_counter.deleted, 0)
         self.assertEqual(changes_counter.modified, 0)
 
-    def test_that_not_return_changes_from_unchanged_file(self):
-        exist_unchanged_file = False
-        for common_file in self.common_files:
-            if common_file.relative_path == "\\unchanged_file.py":
-                exist_unchanged_file = True
 
-        self.assertFalse(exist_unchanged_file)
+    def test_returns_none_for_unchanged_file(self):
+        unchanged_file = self.get_file_by_path("\\unchanged_file.py", self.common_files)
+
+        self.assertFalse(unchanged_file)
+
+    def get_file_by_path(self, path: str, files: list[FileChanges]) -> FileChanges:
+        for file in files:
+            if file.relative_path == path:
+                return file
+
+        return None
