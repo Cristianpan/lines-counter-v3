@@ -1,4 +1,5 @@
 import os
+from typing import Callable
 
 
 def get_all_python_file_paths_from_directory(project_path: str) -> list[str]:
