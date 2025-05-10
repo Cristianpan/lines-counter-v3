@@ -163,4 +163,6 @@ def _has_changes(counter: ChangesCount) -> bool:
 
 
 def _annotate_line(line: str, annotation: str) -> str:
-    return f"{line.replace('\n', '')} #{annotation}\n"
+    clean_line = line.replace("\n", "");
+
+    return f"{clean_line} #{annotation}\n"
