@@ -119,9 +119,11 @@ def _process_common_files(
 def _compare_content(
     old_content: list[str], new_content: list[str]
 ) -> tuple[ChangesCount, list[str], list[str]]:
+    
     min_file_size = min(len(old_content), len(new_content))
-
     changes_counter = ChangesCount()
+    IS_EQUAL = 1.0
+    IS_MODIFIED = 0.6
 
     for i in range(0, min_file_size):
 
@@ -130,13 +132,13 @@ def _compare_content(
 
         similarity_percentage = get_similarity_percentage(old_line, new_line)
 
-        if similarity_percentage == 1:
+        if similarity_percentage == IS_EQUAL:
             continue
         else:
             changes_counter.deleted += 1
             old_content[i] = _annotate_line(old_content[i], "borrado")
 
-        if similarity_percentage >= 0.7:
+        if similarity_percentage >= IS_MODIFIED:
             new_content[i] = _annotate_line(new_content[i], "modificado")
             changes_counter.modified += 1
         else:
@@ -161,4 +163,4 @@ def _has_changes(counter: ChangesCount) -> bool:
 
 
 def _annotate_line(line: str, annotation: str) -> str:
-    return f"{line.replace("\n", "")} #{annotation}\n"
+    return f"{line.replace('\n', '')} #{annotation}\n"

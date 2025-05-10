@@ -1,8 +1,8 @@
 from .models.lines_count_report import LinesCountReport
 
-from .models.ChangesSummaryReport import ChangeSummaryReport
+from .models.changes_summary_report import ChangeSummaryReport
 
-from .models.AnnotatedCodeGenerator import AnnotatedCodeGenerator
+from .models.annotated_code_generator import AnnotatedCodeGenerator
 
 from .usecases.count_physical_lines_from_project import (
     count_physical_lines_from_project,
@@ -43,7 +43,7 @@ def main():
     new_project_path = "tests\\assets\\versions_project\\new_version"
     #new_project_path = input("Please enter the path to the new version of the project:")
 
-    report_save_path = "tests\\assets\\versions_project"
+    report_save_path = "tests\\assets\\versions_project\\results"
 
     try:
         process_project_for_physical_line_and_method_counts(
