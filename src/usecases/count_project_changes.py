@@ -32,9 +32,7 @@ def count_project_changes(
     new_version_files = get_all_python_file_paths_from_directory(new_version_path)
 
     file_differences = get_file_paths_changes_between_versions(
-        old_version_path,
         old_version_files,
-        new_version_path,
         new_version_files,
     )
 
