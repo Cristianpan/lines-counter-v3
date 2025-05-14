@@ -18,7 +18,7 @@ def count_methods_from_project(project_path: str) -> dict:
     methods_list = {}
 
     for file_path in python_file_paths_in_project:
-        methods_list[file_path] = _count_methods_from_file(file_path)
+        methods_list[file_path.relative_path] = _count_methods_from_file(file_path.full_path)
 
     return methods_list
 

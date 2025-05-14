@@ -18,8 +18,8 @@ def count_physical_lines_from_project(project_path: str) -> tuple[int, dict]:
     files_physical_lines_count = {}
 
     for file_path in python_file_paths_in_project:
-        files_physical_lines_count[file_path] = _count_physical_lines_from_file(file_path)
-        project_physical_lines_count += files_physical_lines_count[file_path]
+        files_physical_lines_count[file_path.relative_path] = _count_physical_lines_from_file(file_path.full_path)
+        project_physical_lines_count += files_physical_lines_count[file_path.relative_path]
         
 
     return project_physical_lines_count, files_physical_lines_count

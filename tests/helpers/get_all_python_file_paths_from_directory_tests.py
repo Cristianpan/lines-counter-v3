@@ -1,4 +1,5 @@
 from unittest import TestCase
+from pathlib import Path
 
 from src.helpers.get_all_python_file_paths_from_directory import (
     get_all_python_file_paths_from_directory,
@@ -24,5 +25,14 @@ class GetAllPythonFilePathsFromDirectoryTests(TestCase):
         python_files = get_all_python_file_paths_from_directory(
             "tests/assets/only_code_python_project"
         )
+        expected_python_file = Path("tests/assets/only_code_python_project/main.py")
 
-        self.assertIn("tests/assets/only_code_python_project/main.py", python_files)
+        exist_python_file = False
+
+        for python_file in python_files: 
+            if Path(python_file.full_path) == expected_python_file: 
+                exist_python_file = True
+                break
+
+        self.assertTrue(exist_python_file)
+        
