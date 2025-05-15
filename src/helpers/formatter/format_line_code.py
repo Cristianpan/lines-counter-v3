@@ -26,7 +26,11 @@ def format_line_code(line: str) -> str:
         return line
 
     comment = extract_inline_comment(line)
+
     code = line.replace(comment.strip(), "")
+
+    if comment and code.strip():
+        comment += "\n"
 
     if comment and is_line_too_long(comment):
         comment = _format_comment(comment)
@@ -69,10 +73,10 @@ def _format_asign(line: str) -> str:
     for term in terms:
         # Recursively format term if too long
         if is_line_too_long(total_indent + term):
-            term = format_line_code(f"{total_indent}{term}")
+            term = format_line_code(f"{total_indent}{term}").rstrip()
 
         if is_first:
-            formatted_line += f"{total_indent}{term.strip()} \n"
+            formatted_line += f"{total_indent}{term.strip()}\n"
             is_first = False
             continue
 
@@ -84,7 +88,7 @@ def _format_asign(line: str) -> str:
 
         expecting_operator = not expecting_operator
 
-    formatted_line += f"{base_indent}) \n"
+    formatted_line += f"{base_indent})\n"
 
     return formatted_line
 
@@ -99,14 +103,14 @@ def _format_comment(comment: str) -> str:
     for token in tokens:
         # Wrap comment line if it gets too long
         if is_line_too_long(aux_formatted_comment + token):
-            formatted_comment += f"{aux_formatted_comment}\n"
+            formatted_comment += f"{aux_formatted_comment.rstrip()}\n"
             aux_formatted_comment = f"{base_ident}# "
 
         aux_formatted_comment += f"{token} "
 
-    formatted_comment += f"{aux_formatted_comment}\n"
+    formatted_comment += f"{aux_formatted_comment.rstrip()}"
 
-    return formatted_comment.rstrip()
+    return formatted_comment
 
 
 def _format_function_definition(line: str) -> str:
@@ -142,11 +146,11 @@ def _format_function_call(line: str) -> str:
         # Reformat argument if it exceeds line length by itself
         if is_line_too_long(total_indent + argument):
             argument = format_line_code(f"{total_indent}{argument}")
-            formatted_line += f"{total_indent}{argument.lstrip()}, \n"
+            formatted_line += f"{total_indent}{argument.lstrip()},\n"
         else:
-            formatted_line += f"{total_indent}{argument}, \n"
+            formatted_line += f"{total_indent}{argument.strip().rstrip(')')},\n"
 
-    formatted_line += f"{base_indent})\n"
+    formatted_line += f"{base_indent})"
 
     return formatted_line
 

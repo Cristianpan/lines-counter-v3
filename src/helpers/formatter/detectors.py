@@ -49,7 +49,7 @@ def is_asign(line: str) -> tuple[str, str] | None:
                 - A tuple with the assignment part and the expression part if matched.
                 - None if no assignment is detected.
     """
-    assignment_regex = r"^\s*\w+\s*(\+|-|\*|/|\\|\*\*|>>|<<|&|\||\^|=)?=\s*"
+    assignment_regex = r"^\s*[\w\s,]+\s*(\+|-|\*|/|\\|\*\*|>>|<<|&|\||\^|=)?=\s*"
 
     match_result = match(assignment_regex, line)
 
@@ -57,7 +57,7 @@ def is_asign(line: str) -> tuple[str, str] | None:
         return None
 
     # Split into assignment operator and the rest expression
-    assignment = line[: match_result.end()]
+    assignment = line[: match_result.end()].rstrip()
     expresion = line[match_result.end() :]
 
     return assignment, expresion

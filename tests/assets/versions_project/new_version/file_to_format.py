@@ -1,13 +1,13 @@
 class ReportGenerator:
     """
-        This line exceeds 80 characters and is intentionally written this way for testing purposes.  
+        This line exceeds 80 characters and is intentionally written this way for testing purposes.
     """
     def __init__(self, report_title, author_name):
         self.report_title = report_title
         self.author_name = author_name
 
     def generate_header(self):
-        header = f"Report Title: {self.report_title}\nAuthor: {self.author_name}\n"
+        header = f"Report Title: {self.report_title}\nAuthor: {self.author_name}\n" #comentario
         return header
 
     def generate_section(self, section_title: str = "title", section_content: str = "content") -> str:
