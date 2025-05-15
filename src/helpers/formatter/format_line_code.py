@@ -10,7 +10,6 @@ from .detectors import (
 
 
 def format_line_code(line: str) -> str:
-
     if not is_line_too_long(line):
         return line
 
@@ -21,7 +20,6 @@ def format_line_code(line: str) -> str:
         comment = _format_comment(comment)
 
     if code and is_line_too_long(code):
-
         if is_import(code):
             code = _format_import(code)
 
@@ -164,11 +162,10 @@ def _format_string(line: str) -> str:
     # Remove prefix to tokenize string content only
     content_tokens = line.replace(string_prefix, "").rstrip(string_suffix).split()
 
-    formatted_line = f"(\n"
+    formatted_line = "(\n"
     current_line = string_prefix
 
     for token in content_tokens:
-
         # Check if adding this token would exceed the max line size
         if is_line_too_long(total_indent + current_line + token):
             formatted_line += f"{total_indent}{current_line.strip()} {string_suffix}\n"

@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List
 from ..types.file_path import FilePath
 from ..types.file_path_comparison import FilePathComparison
 

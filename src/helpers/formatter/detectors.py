@@ -49,6 +49,6 @@ def is_string(line: str) -> tuple[str, str] | None:
         return None
 
     string_prefix = line[: match_result.end()]
-    string_sufix = line[-1] # Assumes line ends with closing quote
+    string_sufix = line[-1]  # Assumes line ends with closing quote
 
     return string_prefix, string_sufix

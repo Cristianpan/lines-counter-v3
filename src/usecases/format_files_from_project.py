@@ -7,7 +7,6 @@ from ..types.file_path import FilePath
 
 
 def format_files_from_project(project_path: str) -> list[tuple[FilePath, list[str]]]:
-
     python_file_paths_in_project = get_all_python_file_paths_from_directory(
         project_path
     )

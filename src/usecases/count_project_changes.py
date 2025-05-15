@@ -26,7 +26,6 @@ from ..helpers.get_similarity_percentage import get_similarity_percentage
 def count_project_changes(
     old_version_path: str, new_version_path: str
 ) -> tuple[list[FileChanges], list[FileChanges], list[FileChanges]]:
-
     old_version_files = get_all_python_file_paths_from_directory(old_version_path)
 
     new_version_files = get_all_python_file_paths_from_directory(new_version_path)
@@ -117,14 +116,12 @@ def _process_common_files(
 def _compare_content(
     old_content: list[str], new_content: list[str]
 ) -> tuple[ChangesCount, list[str], list[str]]:
-    
     min_file_size = min(len(old_content), len(new_content))
     changes_counter = ChangesCount()
     IS_EQUAL = 1.0
     IS_MODIFIED = 0.6
 
     for i in range(0, min_file_size):
-
         old_line = old_content[i].rstrip()
         new_line = new_content[i].rstrip()
 
@@ -161,6 +158,5 @@ def _has_changes(counter: ChangesCount) -> bool:
 
 
 def _annotate_line(line: str, annotation: str) -> str:
-    clean_line = line.replace("\n", "");
-
+    clean_line = line.replace("\n", "")
     return f"{clean_line} #{annotation}\n"
