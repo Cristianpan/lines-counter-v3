@@ -1,6 +1,7 @@
 import tokenize
 from io import StringIO
 
+
 def is_line_too_long(line: str) -> bool:
     _MAX_LINE_SIZE = 80
 

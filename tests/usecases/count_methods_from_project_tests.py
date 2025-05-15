@@ -85,7 +85,9 @@ class CountMethodsFromProyectTests(TestCase):
             self.fail("InMemoryFruitRepository class not founded")
 
     def test_that_a_file_with_no_classes_should_return_no_classes_found(self):
-        project_method_count = count_methods_from_project("tests/assets/empty_python_project")
+        project_method_count = count_methods_from_project(
+            "tests/assets/empty_python_project"
+        )
 
         for file_data in project_method_count.values():
             self.assertIn("No classes found", file_data)

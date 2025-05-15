@@ -1,8 +1,8 @@
 import os
 from ..types.file_changes import FileChanges
 
-class AnnotatedCodeGenerator:
 
+class AnnotatedCodeGenerator:
     def __init__(self, output_base_path: str, changed_files: list[FileChanges]):
         self.__output_base_path = output_base_path
         self.__changed_files = changed_files
@@ -16,7 +16,9 @@ class AnnotatedCodeGenerator:
             self.__write_annotated_file("old", relative_path, old_lines)
             self.__write_annotated_file("new", relative_path, new_lines)
 
-    def __write_annotated_file(self, version_label: str, relative_path: str, content_lines: list[str]):
+    def __write_annotated_file(
+        self, version_label: str, relative_path: str, content_lines: list[str]
+    ):
         annotated_filename = relative_path.replace(".py", f"-{version_label}.py")
         full_output_path = self.__output_base_path + annotated_filename
 

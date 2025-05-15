@@ -1,7 +1,7 @@
 def get_similarity_percentage(str1: str, str2: str) -> float:
     """
     Calculates the similarity percentage between two strings using the Levenshtein distance.
-    
+
     Returns a value between 0.0 (completely different) and 1.0 (identical).
 
     Args:

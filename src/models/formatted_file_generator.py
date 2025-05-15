@@ -3,7 +3,6 @@ from ..types.file_path import FilePath
 
 
 class FormattedFileGenerator:
-
     def __init__(
         self, output_base_path: str, formatted_files: list[tuple[FilePath, list[str]]]
     ):

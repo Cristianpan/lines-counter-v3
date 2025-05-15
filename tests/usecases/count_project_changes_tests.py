@@ -5,7 +5,6 @@ import os
 
 
 class CountProjectChangesTests(TestCase):
-
     def setUp(self):
         old_path_version = "tests/assets/versions_project/old_version"
         new_path_version = "tests/assets/versions_project/new_version"
@@ -26,7 +25,6 @@ class CountProjectChangesTests(TestCase):
         self.assertEqual(changes_counter.deleted, 2)
         self.assertEqual(changes_counter.modified, 2)
 
-
     def test_counts_changes_correctly_in_deleted_file(self):
         deleted_file = self.get_file_by_path("/deleted_file.py", self.deleted_files)
         changes_counter = deleted_file.counter
@@ -35,7 +33,6 @@ class CountProjectChangesTests(TestCase):
         self.assertEqual(changes_counter.deleted, 3)
         self.assertEqual(changes_counter.modified, 0)
 
-
     def test_counts_changes_correctly_in_new_file(self):
         new_file = self.get_file_by_path("/new_file.py", self.new_files)
         changes_counter = new_file.counter
@@ -43,7 +40,6 @@ class CountProjectChangesTests(TestCase):
         self.assertEqual(changes_counter.added, 7)
         self.assertEqual(changes_counter.deleted, 0)
         self.assertEqual(changes_counter.modified, 0)
-
 
     def test_returns_none_for_unchanged_file(self):
         unchanged_file = self.get_file_by_path("/unchanged_file.py", self.common_files)

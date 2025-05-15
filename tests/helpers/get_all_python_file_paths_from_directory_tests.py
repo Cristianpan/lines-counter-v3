@@ -29,10 +29,9 @@ class GetAllPythonFilePathsFromDirectoryTests(TestCase):
 
         exist_python_file = False
 
-        for python_file in python_files: 
-            if Path(python_file.full_path) == expected_python_file: 
+        for python_file in python_files:
+            if Path(python_file.full_path) == expected_python_file:
                 exist_python_file = True
                 break
 
         self.assertTrue(exist_python_file)
-        

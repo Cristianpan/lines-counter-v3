@@ -5,7 +5,6 @@ from ..types.changes_count import ChangesCount
 
 
 class ChangeSummaryReport:
-
     __DIVIDER = "-" * 110 + "\n"
 
     def __init__(
@@ -26,10 +25,14 @@ class ChangeSummaryReport:
 
         with open(full_path, "w", encoding="utf-8") as report_file:
             self.__write_section(report_file, "Archivos agregados", self.__added_files)
-            self.__write_section(report_file, "Archivos modificados", self.__modified_files)
+            self.__write_section(
+                report_file, "Archivos modificados", self.__modified_files
+            )
             self.__write_section(report_file, "Archivos borrados", self.__deleted_files)
 
-    def __write_section(self, file_writer: TextIOWrapper, title: str, files: list[FileChanges]):
+    def __write_section(
+        self, file_writer: TextIOWrapper, title: str, files: list[FileChanges]
+    ):
         file_writer.write(self.__build_header(title))
         total = ChangesCount()
 
