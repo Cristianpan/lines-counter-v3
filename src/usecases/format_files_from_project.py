@@ -7,6 +7,19 @@ from ..types.file_path import FilePath
 
 
 def format_files_from_project(project_path: str) -> list[tuple[FilePath, list[str]]]:
+    """
+    Formats all Python files in a given project directory.
+
+    Searches for all Python files within the specified project path,
+    formats their contents and returns only the files that were modified
+    during formatting.
+
+    Args:
+        project_path (str): The path to the root of the project directory.
+
+    Returns:
+        list[tuple[FilePath, list[str]]]
+    """
     python_file_paths_in_project = get_all_python_file_paths_from_directory(
         project_path
     )

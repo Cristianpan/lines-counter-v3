@@ -10,6 +10,18 @@ from .detectors import (
 
 
 def format_line_code(line: str) -> str:
+    """
+    Formats a code line to ensure it does not exceed a maximum length.
+
+    It processes inline comments and different code structures
+    (imports, function definitions, assignments, calls, strings) differently.
+
+    Args:
+        line (str): The line of code to format.
+
+    Returns:
+        str: The formatted line
+    """
     if not is_line_too_long(line):
         return line
 
@@ -46,6 +58,7 @@ def _format_asign(line: str) -> str:
     assignment, expression = is_asign(line)
 
     terms = expression.strip().split()
+    # Group function calls and strings so they stay together
     terms = group_functions(terms)
     terms = group_strings(terms)
 
@@ -54,6 +67,7 @@ def _format_asign(line: str) -> str:
     expecting_operator = True
 
     for term in terms:
+        # Recursively format term if too long
         if is_line_too_long(total_indent + term):
             term = format_line_code(f"{total_indent}{term}")
 
@@ -62,6 +76,7 @@ def _format_asign(line: str) -> str:
             is_first = False
             continue
 
+        # Alternate between operator and operand formatting
         if expecting_operator:
             formatted_line += f"{total_indent}{term} "
         else:
@@ -82,6 +97,7 @@ def _format_comment(comment: str) -> str:
     aux_formatted_comment = f"{base_ident}# "
 
     for token in tokens:
+        # Wrap comment line if it gets too long
         if is_line_too_long(aux_formatted_comment + token):
             formatted_comment += f"{aux_formatted_comment}\n"
             aux_formatted_comment = f"{base_ident}# "
@@ -115,12 +131,15 @@ def _format_function_call(line: str) -> str:
     function_call, function_rest = is_function_call(line)
 
     arguments = function_rest.split(",")
+
+    # Group nested function calls and strings in arguments
     arguments = group_functions(arguments)
     arguments = group_strings(arguments)
 
     formatted_line = f"{base_indent}{function_call}\n"
 
     for argument in arguments:
+        # Reformat argument if it exceeds line length by itself
         if is_line_too_long(total_indent + argument):
             argument = format_line_code(f"{total_indent}{argument}")
             formatted_line += f"{total_indent}{argument.lstrip()}, \n"
@@ -166,9 +185,9 @@ def _format_string(line: str) -> str:
     current_line = string_prefix
 
     for token in content_tokens:
-        # Check if adding this token would exceed the max line size
+        # If adding token would make line too long, wrap it
         if is_line_too_long(total_indent + current_line + token):
-            formatted_line += f"{total_indent}{current_line.strip()} {string_suffix}\n"
+            formatted_line += f"{total_indent}{current_line.strip()}{string_suffix}\n"
             current_line = string_prefix  # Start new line with prefix
 
         current_line += f"{token} "
