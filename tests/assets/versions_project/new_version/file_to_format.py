@@ -15,6 +15,8 @@ class ReportGenerator:
         return formatted_section
 
     def generate_long_line_example(self):
+        if "200000000" and "2000000000" and "3000000000" and "10000000000000" and "200000000" and "2000000000" and "3000000000" and "10000000000000":
+            print("hola")
         # This line exceeds 80 characters and is intentionally written this way for testing purposes.
         return "This is an example of a very long line that definitely goes beyond eighty characters."
 
@@ -27,8 +29,8 @@ class ReportGenerator:
 def create_sample_report():
     generator = ReportGenerator("Annual Financial Report", "Johnathan Alexander Maxwell")
     header = generator.generate_header()
-    intro = generator.generate_section("Introduction", "This report presents a detailed overview of our annual financial performance, which includes data from multiple sources and takes into account various economic factors.")
-    conclusion = generator.generate_section("Conclusion", "The data indicates that the company has achieved stable growth across all departments, with notable increases in revenue and operational efficiency.")
+    intro = generator.generate_section("Introduction", "This report presents a detailed overview of our annual financial performance, which includes data from multiple sources and takes into account various economic factors." )
+    conclusion = generator.generate_section("Conclusion", "The data indicates that the company has achieved stable growth across all departments, with notable increases in revenue and operational efficiency." )
     summary = generator.summarize()
 
     full_report = header + intro + conclusion + "\nSummary:\n" + summary

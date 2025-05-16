@@ -8,6 +8,8 @@ from .detectors import (
     is_function_definition,
 )
 
+from re import split
+
 
 def format_line_code(line: str) -> str:
     """
@@ -134,23 +136,41 @@ def _format_function_call(line: str) -> str:
     base_indent, total_indent = get_indent(line)
     function_call, function_rest = is_function_call(line)
 
-    arguments = function_rest.split(",")
+    split_regex = r"(\)\.|[,)])"
+
+    function_rest = [p for p in split(split_regex, function_rest) if p != ""]
 
     # Group nested function calls and strings in arguments
-    arguments = group_functions(arguments)
-    arguments = group_strings(arguments)
+    function_rest = group_functions(function_rest)
+    function_rest = group_strings(function_rest)
 
-    formatted_line = f"{base_indent}{function_call}\n"
+    formatted_line = f"{base_indent}{function_call}"
 
-    for argument in arguments:
-        # Reformat argument if it exceeds line length by itself
-        if is_line_too_long(total_indent + argument):
-            argument = format_line_code(f"{total_indent}{argument}")
-            formatted_line += f"{total_indent}{argument.lstrip()},\n"
-        else:
-            formatted_line += f"{total_indent}{argument.strip().rstrip(')')},\n"
+    for argument in function_rest:
+        if is_function_call(argument):
+            formatted_line += _format_function_call(base_indent + argument).lstrip()
+            continue
 
-    formatted_line += f"{base_indent})"
+        if argument.strip() == ",":
+            formatted_line += f"{argument}"
+            continue
+
+        if argument == ").":
+            formatted_line += (
+                f"\n{argument}" if not formatted_line.endswith("(") else argument
+            )
+            continue
+
+        if argument.strip().endswith(")"):
+            formatted_line += (
+                f"\n{base_indent}{argument}"
+                if not formatted_line.endswith("(")
+                else argument
+            )
+            continue
+
+        if argument.strip():
+            formatted_line += f"\n{total_indent}{argument.strip()}"
 
     return formatted_line
 
@@ -208,8 +228,6 @@ def _generic_format(line: str) -> str:
     base_indent, total_indent = get_indent(line)
 
     tokens = line.strip().split()
-    tokens = group_functions(tokens)
-    tokens = group_strings(tokens)
 
     formatted_line = ""
     current_line = ""
@@ -220,18 +238,18 @@ def _generic_format(line: str) -> str:
 
         # Reformat token if it exceeds line length by itself
         if is_line_too_long(token):
-            token = format_line_code(f"{indent}{token}")
+            token = format_line_code(f"{indent}{token.strip()}")
             token = f"{indent}{token.lstrip()}"
 
         # If adding token would make line too long, wrap it
-        if is_line_too_long(indent + current_line + token):
+        if is_line_too_long(current_line):
             formatted_line += f"{indent}{current_line.strip()}\\\n"
             current_line = ""
             is_first_line = False
 
-        current_line += f"{token} "
+        current_line += f"{token.strip()} "
 
     # Add the final line
-    formatted_line += f"{total_indent}{current_line.strip()}\n"
+    formatted_line += f"{base_indent}{current_line.strip()}\n"
 
     return formatted_line

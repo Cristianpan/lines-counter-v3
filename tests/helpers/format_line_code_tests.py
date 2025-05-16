@@ -66,7 +66,7 @@ class FormatLineCodeTests(TestCase):
                 "    report_save_path,",
                 "    new_files,",
                 "    deleted_files,",
-                "    modified_files,",
+                "    modified_files",
                 ")",
             ]
         )

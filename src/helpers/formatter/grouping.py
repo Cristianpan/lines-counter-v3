@@ -17,7 +17,7 @@ def group_strings(tokens: list[str]) -> list[str]:
     buffer = []
 
     for token in tokens:
-        clear_token = token.replace("f", "").lstrip()
+        clear_token = token.replace("f", "").strip()
 
         if not is_string:
             if clear_token.startswith(('"', "'")):
@@ -30,7 +30,7 @@ def group_strings(tokens: list[str]) -> list[str]:
         else:
             buffer.append(token)
 
-        if token.endswith(type_string) and is_string:
+        if clear_token.endswith(type_string) and is_string:
             result.append(" ".join(buffer))
             buffer.clear()
             is_string = False

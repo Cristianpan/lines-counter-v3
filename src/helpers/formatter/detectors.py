@@ -32,7 +32,7 @@ def is_function_call(line: str) -> tuple[str, str] | None:
 
     # Extract function call substring
     function_call = line[: match_result.end()]
-    function_rest = line[match_result.end() :]
+    function_rest = line[match_result.end() :].strip()
 
     return function_call, function_rest
 
