@@ -19,7 +19,9 @@ class AnnotatedCodeGenerator:
     def __write_annotated_file(
         self, version_label: str, relative_path: str, content_lines: list[str]
     ):
-        annotated_filename = relative_path.replace(".py", f"-{version_label}.py")
+        annotated_filename = relative_path.replace(
+            ".py", f"_annotated_{version_label}.py"
+        )
         full_output_path = self.__output_base_path + annotated_filename
 
         self.__ensure_directories_exist(full_output_path)

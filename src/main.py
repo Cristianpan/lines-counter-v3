@@ -10,24 +10,29 @@ from .processors.process_project_to_format_files import process_project_to_forma
 
 
 def main():
-    # project_name = input("Please enter the project name: ")
-    project_name = "chanchito"
+    project_name = input("Please enter the project name: ")
 
-    old_project_path = "tests\\assets\\versions_project\\old_version"
-    # old_project_path = input("Please enter the path to the old version of the project:")
+    old_project_path = input(
+        "Please enter the path to the old version of the project: "
+    )
 
-    new_project_path = "tests\\assets\\versions_project\\new_version"
-    # new_project_path = input("Please enter the path to the new version of the project:")
+    new_project_path = input(
+        "Please enter the path to the new version of the project: "
+    )
 
-    report_save_path = "tests\\assets\\versions_project\\results"
+    report_save_path = input(
+        "Please enter the path to save the reports and the formatted files with the annotated changes: "
+    )
+
+    print("\n", "=" * 130, "\n")
 
     try:
         process_project_for_physical_line_and_method_counts(
-            old_project_path, project_name
+            old_project_path, project_name + " old version", report_save_path
         )
 
         process_project_for_physical_line_and_method_counts(
-            new_project_path, project_name
+            new_project_path, project_name + " new version", report_save_path
         )
 
         process_project_to_count_changes(

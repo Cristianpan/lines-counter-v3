@@ -1,8 +1,10 @@
+import os
+
+
 class LinesCountReport:
-    project_name: str
-    project_physical_lines_count: int
-    files_physical_lines_count: dict
-    files_methods_count: dict
+    __REPORT_FILE_NAME: str = "lines_count_report.txt"
+    __DIVIDER = f"+ {'-' * 40} + {'-' * 20} + {'-' * 20} + {'-' * 20} +\n"
+    open_file_type = "w+"
 
     def __init__(
         self,
@@ -10,45 +12,50 @@ class LinesCountReport:
         project_physical_lines_count: int,
         files_physical_lines_count: dict,
         files_methods_count: dict,
+        output_path: str,
     ):
-        self.project_name = project_name
-        self.project_physical_lines_count = project_physical_lines_count
-        self.files_physical_lines_count = files_physical_lines_count
-        self.files_methods_count = files_methods_count
+        self.__project_name = project_name
+        self.__project_physical_lines_count = project_physical_lines_count
+        self.__files_physical_lines_count = files_physical_lines_count
+        self.__files_methods_count = files_methods_count
+        self.__output_path = output_path
 
-    def __str__(self):
+    def generate(self):
+        report_full_path = os.path.join(self.__output_path, self.__REPORT_FILE_NAME)
+
+        with open(
+            report_full_path, LinesCountReport.open_file_type, encoding="utf-8"
+        ) as report_file:
+            report_file.write(self.__build_header(self.__project_name))
+            for file_path in self.__files_physical_lines_count:
+                physical_lines = self.__files_physical_lines_count[file_path]
+                methods = self.__files_methods_count[file_path]
+                for class_name, methods in methods.items():
+                    report_file.write(
+                        self.__format_row(
+                            file_path, class_name, physical_lines, methods
+                        )
+                    )
+
+            report_file.write(
+                self.__format_row("Total", "", "", self.__project_physical_lines_count)
+            )
+            report_file.write("\n\n")
+        LinesCountReport.open_file_type = "a"
+
+    def __build_header(self, title: str) -> str:
         return (
-            f"Project: {self.project_name}\n"
-            f"Class List:\n{self._file_metrics_count_to_string()}\n"
-            f"Total Physical lines: {self.project_physical_lines_count}\n"
+            f"+{'-' * 111}+\n"
+            f"| {title:^110}|\n"
+            f"{self.__DIVIDER}"
+            f"| {'Archivo':<40} | {'Clase':<20} | {'Métodos':<20} | {'Líneas Físicas':<20} |\n"
+            f"{self.__DIVIDER}"
         )
 
-    def _process_file_metrics_count(self) -> dict:
-        file_metrics_count = {}
-
-        for file_path in self.files_physical_lines_count:
-            file_metrics_count[file_path] = [
-                self.files_methods_count[file_path],
-                self.files_physical_lines_count[file_path],
-            ]
-
-        return file_metrics_count
-
-    def _file_metrics_count_to_string(self) -> str:
-        file_metrics = []
-        for file_name, (
-            methods,
-            physical_lines,
-        ) in self._process_file_metrics_count().items():
-            file_metrics.append(f"File Name: {file_name}")
-            for class_name, (method_count) in methods.items():
-                # For structured programming files
-                if class_name == "No classes found":
-                    file_metrics.append(f"Number of functions: {method_count}")
-                else:
-                    file_metrics.append(f"Class: {class_name}")
-                    file_metrics.append(f"\tNumber of methods: {method_count}")
-
-            file_metrics.append(f"Physical lines: {physical_lines}")
-            file_metrics.append("-" * 20)
-        return "\n".join(file_metrics)
+    def __format_row(
+        self, file_path: str, class_name: str, methods: int | str, physical_lines: int
+    ) -> str:
+        return (
+            f"| {file_path:<40} | {class_name:<20} | {methods:<20} | {physical_lines:<20} |\n"
+            f"{self.__DIVIDER}"
+        )

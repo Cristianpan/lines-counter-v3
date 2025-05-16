@@ -1,6 +1,6 @@
 [tool.ruff]
 exclude = [
-  "tests/assets/",
+  "tests/assets",
   "__init__.py",
   "__pycache__",
 ]
