@@ -151,6 +151,10 @@ def _format_function_call(line: str) -> str:
             formatted_line += _format_function_call(base_indent + argument).lstrip()
             continue
 
+        if is_line_too_long(argument) and is_string(argument):
+            formatted_line += _format_string(base_indent + argument).lstrip() 
+            continue
+
         if argument.strip() == ",":
             formatted_line += f"{argument}"
             continue
@@ -237,7 +241,7 @@ def _generic_format(line: str) -> str:
         indent = base_indent if is_first_line else total_indent
 
         # Reformat token if it exceeds line length by itself
-        if is_line_too_long(token):
+        if is_line_too_long(indent + token):
             token = format_line_code(f"{indent}{token.strip()}")
             token = f"{indent}{token.lstrip()}"
 
