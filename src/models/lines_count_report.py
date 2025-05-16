@@ -48,7 +48,7 @@ class LinesCountReport:
             f"+{'-' * 111}+\n"
             f"| {title:^110}|\n"
             f"{self.__DIVIDER}"
-            f"| {'Archivo':<40} | {'Clase':<20} | {'Métodos':<20} | {'Líneas Físicas':<20} |\n"
+            f"| {'Archivo':<40} | {'Clase':<20} | {'Métodos/Funciones':<20} | {'Líneas Físicas':<20} |\n"
             f"{self.__DIVIDER}"
         )
 
