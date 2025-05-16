@@ -1,5 +1,5 @@
 from src.usecases.count_project_changes import count_project_changes
-from src.types.file_changes import FileChanges
+from src.custom_types.file_changes import FileChanges
 from unittest import TestCase
 import os
 

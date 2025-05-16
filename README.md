@@ -46,6 +46,14 @@ Para ejecutar los tests unitarios y de integración basta con ejecutar:
 python -m unittest discover -s tests -p "*_tests.py"
 ```
 
+## Generar el ejecutable - Solo para windows
+Para generar el ejecutable, basta con ejecutar:
+
+```bash
+pyinstaller --onefile --name LinesCounter run_app.py
+```
+El ejecutable podras visualizarlo dentro del directorio `dist` generado por el comando
+
 ## Correr el sistema en modo user-friendly:
 
 Para ejecutar el sistema en modo prompt basta con ejecutar:
@@ -67,4 +75,6 @@ Importar las funciones necesarias en tu proyecto:
 ```py
 from lines_counter import count_logical_lines_from_project
 from lines_counter import count_physical_lines_from_project
+from lines_counter import count_changes_from_project
+from lines_counter import format_files_from_project
 ```

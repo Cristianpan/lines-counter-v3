@@ -1,5 +1,5 @@
 import os
-from ..types.file_changes import FileChanges
+from ..custom_types.file_changes import FileChanges
 
 
 class AnnotatedCodeGenerator:

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.types.file_path import FilePath
+from src.custom_types.file_path import FilePath
 
 from src.helpers.get_file_paths_changes_between_versions import (
     get_file_paths_changes_between_versions,

@@ -46,6 +46,8 @@ def main():
             f"Oh no! An error occurred while getting the line count. Verify that the project path is correct and you have read permissions to the directory: {error}"
         )
 
+    input("\nPress Enter to exit: ")
+
 
 if __name__ == "__main__":
     main()

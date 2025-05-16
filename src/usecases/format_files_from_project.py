@@ -3,7 +3,7 @@ from ..helpers.get_all_python_file_paths_from_directory import (
     get_all_python_file_paths_from_directory,
 )
 from ..helpers.get_file_content import get_file_content
-from ..types.file_path import FilePath
+from ..custom_types.file_path import FilePath
 
 
 def format_files_from_project(project_path: str) -> list[tuple[FilePath, list[str]]]:

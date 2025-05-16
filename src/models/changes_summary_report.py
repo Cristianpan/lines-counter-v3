@@ -1,7 +1,7 @@
 import os
 from io import TextIOWrapper
-from ..types.file_changes import FileChanges
-from ..types.changes_count import ChangesCount
+from ..custom_types.file_changes import FileChanges
+from ..custom_types.changes_count import ChangesCount
 
 
 class ChangeSummaryReport:

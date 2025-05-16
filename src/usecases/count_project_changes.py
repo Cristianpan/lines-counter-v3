@@ -14,11 +14,11 @@ from ..helpers.remove_all_comments_from_content_lines import (
     remove_all_comments_from_content_lines,
 )
 
-from ..types.file_path import FilePath
+from ..custom_types.file_path import FilePath
 
-from ..types.file_changes import FileChanges
+from ..custom_types.file_changes import FileChanges
 
-from ..types.changes_count import ChangesCount
+from ..custom_types.changes_count import ChangesCount
 
 from ..helpers.get_similarity_percentage import get_similarity_percentage
 

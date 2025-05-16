@@ -1,6 +1,6 @@
 from typing import List
-from ..types.file_path import FilePath
-from ..types.file_path_comparison import FilePathComparison
+from ..custom_types.file_path import FilePath
+from ..custom_types.file_path_comparison import FilePathComparison
 
 
 def get_file_paths_changes_between_versions(
