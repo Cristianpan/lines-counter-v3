@@ -5,7 +5,7 @@ from ..types.changes_count import ChangesCount
 
 
 class ChangeSummaryReport:
-    __DIVIDER = "-" * 110 + "\n"
+    __DIVIDER = f"+{'-' * 41} + {'-' * 20} + {'-' * 20} + {'-' * 21}+\n"
 
     def __init__(
         self,
@@ -44,18 +44,20 @@ class ChangeSummaryReport:
 
             file_writer.write(self.__format_row(file_change.relative_path, counter))
 
-        file_writer.write(self.__DIVIDER)
         file_writer.write(self.__format_row("Total", total))
         file_writer.write("\n\n")
 
     def __build_header(self, title: str) -> str:
         return (
+            f"+{'-' * 111}+\n"
+            f"|{title:^111}|\n"
             f"{self.__DIVIDER}"
-            f"{title:^110}\n"
-            f"{self.__DIVIDER}"
-            f"{'Archivo':<40} | {'Líneas borradas':<20} | {'Líneas modificadas':<20} | {'Líneas agregadas':<20}\n"
+            f"| {'Archivo':<40} | {'Líneas borradas':<20} | {'Líneas modificadas':<20} | {'Líneas agregadas':<20} |\n"
             f"{self.__DIVIDER}"
         )
 
     def __format_row(self, file_name: str, counter: ChangesCount) -> str:
-        return f"{file_name:<40} | {counter.deleted:<20} | {counter.modified:<20} | {counter.added:<20}\n"
+        return (
+            f"| {file_name:<40} | {counter.deleted:<20} | {counter.modified:<20} | {counter.added:<20} |\n"
+            f"{self.__DIVIDER}"
+        )
