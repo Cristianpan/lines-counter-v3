@@ -26,6 +26,16 @@ from ..helpers.get_similarity_percentage import get_similarity_percentage
 def count_project_changes(
     old_version_path: str, new_version_path: str
 ) -> tuple[list[FileChanges], list[FileChanges], list[FileChanges]]:
+    """
+    Compares two project versions and returns new, deleted, and modified Python files.
+
+    Args:
+        old_version_path (str): Path to the old version.
+        new_version_path (str): Path to the new version.
+
+    Returns:
+        tuple: Lists of new, deleted, and modified files.
+    """
     old_version_files = get_all_python_file_paths_from_directory(old_version_path)
 
     new_version_files = get_all_python_file_paths_from_directory(new_version_path)
@@ -140,11 +150,13 @@ def _compare_content(
             new_content[i] = _annotate_line(new_content[i], "agregado")
             changes_counter.added += 1
 
+    # Mark and count deleted lines from the old content
     if len(old_content) > min_file_size:
         for i in range(min_file_size, len(old_content)):
             changes_counter.deleted += 1
             old_content[i] = _annotate_line(old_content[i], "borrado")
 
+    # Mark and count added lines in the new content
     if len(new_content) > min_file_size:
         for i in range(min_file_size, len(new_content)):
             new_content[i] = _annotate_line(new_content[i], "agregado")

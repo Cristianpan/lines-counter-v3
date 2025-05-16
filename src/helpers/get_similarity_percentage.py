@@ -24,8 +24,6 @@ def get_similarity_percentage(str1: str, str2: str) -> float:
 def _get_levenshtein_distance(str1: str, str2: str) -> int:
     """
     Computes the Levenshtein distance between two strings.
-    It represents the minimum number of single-character edits
-    (insertions, deletions, or substitutions) required to change one string into the other.
 
     Args:
         str1 (str): First string.

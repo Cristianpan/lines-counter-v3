@@ -9,6 +9,15 @@ def is_line_too_long(line: str) -> bool:
 
 
 def get_indent(line: str):
+    """
+    Returns the base and total indentation for a given line.
+
+    Args:
+        line (str): A line of code.
+
+    Returns:
+        tuple: (base_indent, total_indent), where total_indent adds 4 spaces to the base.
+    """
     _ADITIONAL_INDENT = " " * 4
     base_indent = " " * (len(line) - len(line.lstrip()))
     total_ident = base_indent + _ADITIONAL_INDENT
@@ -16,7 +25,7 @@ def get_indent(line: str):
     return base_indent, total_ident
 
 
-def extract_inline_comment(line: str) -> tuple[str, str]:
+def extract_inline_comment(line: str) -> str:
     if "#" not in line:
         return ""
 
