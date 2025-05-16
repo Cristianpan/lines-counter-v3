@@ -1,5 +1,5 @@
 import os
-from ..types.file_path import FilePath
+from ..custom_types.file_path import FilePath
 
 
 class FormattedFileGenerator:

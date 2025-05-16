@@ -1,5 +1,5 @@
 import os
-from ..types.file_path import FilePath
+from ..custom_types.file_path import FilePath
 
 
 def get_all_python_file_paths_from_directory(project_path: str) -> list[FilePath]:
